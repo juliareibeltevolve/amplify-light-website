@@ -71,11 +71,11 @@ nav.site-nav ul a{
 /* ============== HERO ============== */
 /* Flat editorial hero — no imagery. Eyebrow + giant serif headline anchored bottom-left, vivre.agency rhythm. */
 .hero{
-  min-height:88vh;
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  padding:120px 0 96px;
+  padding:88px 0 22vh;
   border-bottom:1px solid var(--rule);
   position:relative;
 }
@@ -147,7 +147,7 @@ nav.site-nav ul a{
 
 /* ============== PROBLEM STATEMENT ============== */
 .problem{
-  padding:160px 0 140px;
+  padding:128px 0 168px;
   border-bottom:1px solid var(--rule);
 }
 .problem-text{
@@ -163,8 +163,8 @@ nav.site-nav ul a{
 /* ============== ABOUT ============== */
 .about{padding:140px 0 100px;border-bottom:1px solid var(--rule)}
 .about-body{
-  max-width:62ch;
-  margin-top:24px;
+  max-width:72ch;
+  margin-top:32px;
 }
 .about-body p{
   font-size:1.1rem;
@@ -174,55 +174,158 @@ nav.site-nav ul a{
 }
 .about-body p:last-child{margin-bottom:0}
 
-/* ============== TEAM ============== */
-.team{padding:140px 0;border-bottom:1px solid var(--rule)}
-.team-head{margin-bottom:64px}
+/* ============== TEAM (now a sub-section within About) ============== */
+.team-subsection{
+  margin-top:120px;
+}
+.team-head{margin-bottom:48px}
+.team-subhead{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:clamp(1.6rem,2.6vw,2.2rem);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  font-variation-settings:"opsz" 96;
+}
+.team-subhead em{
+  font-style:italic;
+  font-weight:300;
+  color:var(--accent);
+}
 .team-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:32px;
+  gap:48px;
 }
-.team-member{display:flex;flex-direction:column}
+.team-member{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  font-family:inherit;
+  text-align:left;
+  transition:opacity 0.2s ease;
+  position:relative;
+}
+.team-member:hover .team-portrait{
+  transform:scale(1.02);
+}
+.team-member:hover .team-name{
+  color:var(--accent);
+}
+.team-member.is-active .team-portrait{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+}
+.team-grid:has(.team-member.is-active) .team-member:not(.is-active){
+  opacity:0.45;
+}
 .team-portrait{
-  aspect-ratio:4/5;
+  width:100%;
+  max-width:220px;
+  aspect-ratio:1/1;
+  border-radius:50%;
   background:var(--accent-soft);
   border:1px solid var(--rule);
-  margin-bottom:20px;
+  margin-bottom:24px;
   position:relative;
   overflow:hidden;
   display:flex;
   align-items:center;
   justify-content:center;
+  transition:transform 0.3s ease,outline-color 0.2s ease;
 }
-.team-portrait::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:linear-gradient(135deg,rgba(107,79,42,0.06) 0%,transparent 60%);
-  pointer-events:none;
+.team-portrait img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(100%);
 }
 .team-portrait .placeholder-label{
-  position:relative;
-  z-index:1;
   font-family:var(--sans);
-  font-size:0.7rem;
+  font-size:0.62rem;
   letter-spacing:0.2em;
   text-transform:uppercase;
   color:var(--ink-faint);
 }
 .team-name{
   font-family:var(--serif);
-  font-size:1.25rem;
+  font-size:1.2rem;
   font-weight:400;
   letter-spacing:-0.005em;
   color:var(--ink);
   margin-bottom:4px;
+  transition:color 0.2s ease;
 }
 .team-role{
   font-size:0.88rem;
   color:var(--ink-soft);
   line-height:1.45;
 }
+
+/* Bio reveal panel — appears below team grid when a member is clicked */
+.bio-panel{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  margin-top:0;
+  transition:max-height 0.4s ease,opacity 0.3s ease,margin-top 0.4s ease;
+  border-top:1px solid transparent;
+}
+.bio-panel.is-open{
+  max-height:600px;
+  opacity:1;
+  margin-top:56px;
+  border-top:1px solid var(--rule);
+}
+.bio-panel-inner{
+  padding:40px 0 0;
+  max-width:62ch;
+  position:relative;
+}
+.bio-name{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:1.6rem;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  margin-bottom:4px;
+}
+.bio-role{
+  font-size:0.85rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:500;
+  margin-bottom:24px;
+}
+.bio-text p{
+  font-size:1.02rem;
+  line-height:1.65;
+  color:var(--ink-soft);
+  margin-bottom:16px;
+}
+.bio-text p:last-child{margin-bottom:0}
+.bio-close{
+  position:absolute;
+  top:32px;
+  right:0;
+  background:none;
+  border:none;
+  font-size:1.6rem;
+  line-height:1;
+  color:var(--ink-faint);
+  cursor:pointer;
+  padding:8px;
+  font-family:var(--sans);
+  font-weight:300;
+  transition:color 0.2s ease;
+}
+.bio-close:hover{color:var(--ink)}
 
 /* ============== HOW WE HELP / OFFERINGS (v2 four-column pattern) ============== */
 .solutions{
@@ -238,19 +341,18 @@ nav.site-nav ul a{
 .solution{
   display:flex;
   flex-direction:column;
-  gap:32px;
+  gap:20px;
 }
-.solution-icon{
-  width:56px;
-  height:56px;
-  background:var(--ink);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  flex-shrink:0;
+.solution-num{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:300;
+  font-size:1.5rem;
+  color:var(--accent);
+  line-height:1;
+  letter-spacing:-0.01em;
+  font-variation-settings:"opsz" 96;
 }
-.solution-icon svg{width:32px;height:32px}
 .solution-title{
   font-family:var(--serif);
   font-weight:300;
@@ -275,7 +377,7 @@ nav.site-nav ul a{
   font-size:1.1rem;
   line-height:1.6;
   color:var(--ink-soft);
-  max-width:55ch;
+  max-width:72ch;
   margin-bottom:64px;
 }
 .notes-grid{
@@ -351,7 +453,13 @@ footer .container{
 .footer-meta a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 .footer-meta a:hover{color:var(--ink)}
 footer ul{list-style:none;display:flex;gap:28px}
-footer ul a{color:var(--ink-soft);font-size:0.95rem}
+footer ul a{
+  color:var(--ink-soft);
+  font-size:0.72rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  font-weight:400;
+}
 footer ul a:hover{color:var(--accent)}
 
 /* ============== RESPONSIVE ============== */
@@ -361,15 +469,16 @@ footer ul a:hover{color:var(--accent)}
   nav.site-nav ul a{font-size:0.65rem;letter-spacing:0.15em}
   .solutions-grid{grid-template-columns:1fr;gap:56px}
   .notes-grid{grid-template-columns:1fr}
-  .team-grid{grid-template-columns:repeat(2,1fr);gap:36px}
+  .team-grid{grid-template-columns:repeat(2,1fr);gap:40px}
+  .team-subsection{margin-top:80px}
   .hero{min-height:auto;padding:96px 0 80px}
   .problem{padding:96px 0 88px}
-  .about,.team,.solutions,.resources{padding:88px 0}
+  .about,.solutions,.resources{padding:88px 0}
   .section-mark::after{flex:0 0 48px}
 }
 @media (max-width:600px){
   nav.site-nav ul{display:none}
-  .team-grid{grid-template-columns:1fr;gap:40px}
+  .team-grid{grid-template-columns:repeat(2,1fr);gap:32px}
 }
 </style>
 </head>
@@ -381,7 +490,6 @@ footer ul a:hover{color:var(--accent)}
     <a href="#" class="wordmark">Amplify <span class="light">Light</span></a>
     <ul>
       <li><a href="#about">About</a></li>
-      <li><a href="#team">Team</a></li>
       <li><a href="#offerings">Offerings</a></li>
       <li><a href="#resources">Resources</a></li>
     </ul>
@@ -399,53 +507,82 @@ footer ul a:hover{color:var(--accent)}
 <!-- PROBLEM STATEMENT -->
 <section class="problem">
   <div class="container">
-    <p class="problem-text">In a moment of profound complexity, the world's most transformational teachings risk being lost in the noise. Reaching the people who need them requires more than good intentions — it requires clear strategy, faithful execution, and an integrated ecosystem built for how transformation actually spreads.</p>
+    <p class="problem-text">In a moment of profound complexity, the world's most transformational teachings risk being lost in the noise. Reaching the people who need them requires more than good intentions — it relies on clear strategy, faithful execution, and an integrated ecosystem supported by a team that understands how wisdom spreads in the digital age.</p>
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ABOUT (includes Team as a sub-section) -->
 <section id="about" class="about">
   <div class="container">
     <div class="section-mark">
       <span class="eyebrow">About</span>
     </div>
-    <h2 class="section-display">Amplify Light exists to support the <em>evolution of consciousness</em> at scale.</h2>
+    <h2 class="section-display">We support the <em>evolution of</em><br><em>consciousness</em> at global scale.</h2>
     <div class="about-body">
       <p>We partner with visionary leaders and organizations dedicated to the expansion of human consciousness — providing strategic, creative, and operational support so our partners can focus on their core work while scaling their impact globally.</p>
       <p>We believe meaningful, lasting global transformation is rooted in <em class="accent">inner development</em> — awakening individuals to the truth of who they are and their inherent capacity for awareness, compassion, and wisdom. Our role is to help bring this work into the world with greater clarity, reach, and effectiveness.</p>
     </div>
-  </div>
-</section>
 
-<!-- TEAM -->
-<section id="team" class="team">
-  <div class="container">
-    <div class="section-mark">
-      <span class="eyebrow">Team</span>
-    </div>
-    <div class="team-head">
-      <h2 class="section-display">A small team of <em>partners, builders, and strategists.</em></h2>
-    </div>
-    <div class="team-grid">
-      <div class="team-member">
-        <div class="team-portrait"><span class="placeholder-label">Photo</span></div>
-        <div class="team-name">Oleg</div>
-        <div class="team-role">[Role / one-line bio placeholder]</div>
+    <!-- TEAM sub-section -->
+    <div class="team-subsection">
+      <div class="team-head">
+        <h3 class="team-subhead">A dedicated team of <em>partners, builders, and strategists.</em></h3>
       </div>
-      <div class="team-member">
-        <div class="team-portrait"><span class="placeholder-label">Photo</span></div>
-        <div class="team-name">Jason</div>
-        <div class="team-role">Senior Partner — [one-line bio placeholder]</div>
+      <div class="team-grid" id="team-grid">
+        <button class="team-member" data-bio-id="oleg" aria-expanded="false">
+          <div class="team-portrait">
+            <img src="team/oleg.png" alt="Oleg Gorelik">
+          </div>
+          <div class="team-name">Oleg Gorelik</div>
+          <div class="team-role">Founder &amp; Chairman</div>
+        </button>
+        <button class="team-member" data-bio-id="jason" aria-expanded="false">
+          <div class="team-portrait">
+            <img src="team/jason.png" alt="Jason Pyle">
+          </div>
+          <div class="team-name">Jason Pyle</div>
+          <div class="team-role">Managing Director</div>
+        </button>
+        <button class="team-member" data-bio-id="ana" aria-expanded="false">
+          <div class="team-portrait">
+            <img src="team/ana.jpeg" alt="Ana Sanjuan">
+          </div>
+          <div class="team-name">Ana Sanjuan</div>
+          <div class="team-role">Senior Program Director</div>
+        </button>
+        <button class="team-member" data-bio-id="julia" aria-expanded="false">
+          <div class="team-portrait">
+            <img src="team/julia.png" alt="Julia Reibelt">
+          </div>
+          <div class="team-name">Julia Reibelt</div>
+          <div class="team-role">Strategy Director</div>
+        </button>
       </div>
-      <div class="team-member">
-        <div class="team-portrait"><span class="placeholder-label">Photo</span></div>
-        <div class="team-name">Ana</div>
-        <div class="team-role">[Role / one-line bio placeholder]</div>
+
+      <!-- Bio reveal panel — populated by JS when a team member is clicked -->
+      <div class="bio-panel" id="bio-panel" aria-hidden="true">
+        <div class="bio-panel-inner">
+          <div class="bio-name" id="bio-name"></div>
+          <div class="bio-role" id="bio-role"></div>
+          <div class="bio-text" id="bio-text"></div>
+          <button class="bio-close" id="bio-close" aria-label="Close bio">×</button>
+        </div>
       </div>
-      <div class="team-member">
-        <div class="team-portrait"><span class="placeholder-label">Photo</span></div>
-        <div class="team-name">Julia</div>
-        <div class="team-role">Strategy Director — [one-line bio placeholder]</div>
+
+      <!-- Hidden bio source data — edit these paragraphs to update the bios -->
+      <div class="bio-source" hidden>
+        <div data-bio="oleg">
+          <p>[One- to two-paragraph bio placeholder for Oleg Gorelik. As Founder &amp; Chairman, Oleg leads with a focus on the long arc of conscious development and the institutions that support it. Replace with real bio copy.]</p>
+        </div>
+        <div data-bio="jason">
+          <p>[One- to two-paragraph bio placeholder for Jason Pyle. As Managing Director, Jason oversees the operational and strategic engagements across the Amplify Light portfolio. Replace with real bio copy.]</p>
+        </div>
+        <div data-bio="ana">
+          <p>[One- to two-paragraph bio placeholder for Ana Sanjuan. As Senior Program Director, Ana stewards the day-to-day delivery and partner relationships that bring the work to life. Replace with real bio copy.]</p>
+        </div>
+        <div data-bio="julia">
+          <p>[One- to two-paragraph bio placeholder for Julia Reibelt. As Strategy Director, Julia leads the strategic framing, diagnostic, and architecture work that shapes how partners engage with the world. Replace with real bio copy.]</p>
+        </div>
       </div>
     </div>
   </div>
@@ -463,71 +600,44 @@ footer ul a:hover{color:var(--accent)}
 
       <!-- Strategy & Branding -->
       <div class="solution">
-        <div class="solution-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="currentColor">
-            <circle cx="10" cy="10" r="5"/>
-            <rect x="16" y="4" width="12" height="12"/>
-            <path d="M4 22 L12 22 L8 30 Z"/>
-            <circle cx="22" cy="24" r="4"/>
-          </svg>
-        </div>
+        <span class="solution-num">i.</span>
         <div>
-          <h3 class="solution-title">Strategy &amp; Branding</h3>
+          <h3 class="solution-title">Strategy</h3>
           <div class="solution-body">
-            <p>Mission, positioning, and identity.</p>
-            <p>The architecture of how the work shows up in the world.</p>
+            <p>Crafting mission-driven strategy and branding for long-term impact.</p>
           </div>
         </div>
       </div>
 
       <!-- Marketing -->
       <div class="solution">
-        <div class="solution-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="currentColor">
-            <rect width="32" height="32"/>
-            <path d="M16 6 Q16 14 22 16 Q16 18 16 26 Q16 18 10 16 Q16 14 16 6 Z" fill="#f8f5ef"/>
-          </svg>
-        </div>
+        <span class="solution-num">ii.</span>
         <div>
           <h3 class="solution-title">Marketing</h3>
           <div class="solution-body">
-            <p>Narrative, content, and the channels that carry the work.</p>
-            <p>Reach without compromise.</p>
+            <p>Narrative, content, and channels to carry the work into the world.</p>
           </div>
         </div>
       </div>
 
       <!-- Operations -->
       <div class="solution">
-        <div class="solution-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="currentColor">
-            <path d="M6 26 L14 6 L18 6 L10 26 Z"/>
-            <path d="M16 26 L24 6 L28 6 L20 26 Z"/>
-          </svg>
-        </div>
+        <span class="solution-num">iii.</span>
         <div>
           <h3 class="solution-title">Operations</h3>
           <div class="solution-body">
-            <p>Internal systems, team tooling, and process design.</p>
-            <p>Sustained delivery, season after season.</p>
+            <p>Internal systems, resourcing, and processes for sustained delivery.</p>
           </div>
         </div>
       </div>
 
       <!-- Technology -->
       <div class="solution">
-        <div class="solution-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="16" cy="16" r="12"/>
-            <circle cx="16" cy="16" r="7"/>
-            <circle cx="16" cy="16" r="2.5" fill="currentColor"/>
-          </svg>
-        </div>
+        <span class="solution-num">iv.</span>
         <div>
           <h3 class="solution-title">Technology</h3>
           <div class="solution-body">
-            <p>Digital platforms and purpose-built AI tools.</p>
-            <p>Grounded in source pedagogy.</p>
+            <p>Digital platforms and purpose-built AI tools to amplify impact.</p>
           </div>
         </div>
       </div>
@@ -573,10 +683,79 @@ footer ul a:hover{color:var(--accent)}
   <div class="container">
     <div class="footer-meta">Amplify Light — an operating arm of the <a href="https://evolve.org" target="_blank" rel="noopener">Evolve Foundation</a></div>
     <ul>
-      <li><a href="mailto:[email]" class="contact-email">Contact: [email]</a></li>
+      <li><a href="mailto:contact@amplify-light.org" class="contact-email">Contact</a></li>
     </ul>
   </div>
 </footer>
+
+<script>
+  // Team bio reveal — click a portrait to expand bio inline; click again or click X to close
+  (function(){
+    var members = document.querySelectorAll('.team-member[data-bio-id]');
+    var panel = document.getElementById('bio-panel');
+    var bioName = document.getElementById('bio-name');
+    var bioRole = document.getElementById('bio-role');
+    var bioText = document.getElementById('bio-text');
+    var closeBtn = document.getElementById('bio-close');
+    var activeId = null;
+
+    function getBioSource(id){
+      return document.querySelector('.bio-source [data-bio="' + id + '"]');
+    }
+
+    function openBio(member){
+      var id = member.getAttribute('data-bio-id');
+      var name = member.querySelector('.team-name').textContent;
+      var role = member.querySelector('.team-role').textContent;
+      var source = getBioSource(id);
+
+      bioName.textContent = name;
+      bioRole.textContent = role;
+      bioText.innerHTML = source ? source.innerHTML : '';
+
+      members.forEach(function(m){
+        m.classList.remove('is-active');
+        m.setAttribute('aria-expanded','false');
+      });
+      member.classList.add('is-active');
+      member.setAttribute('aria-expanded','true');
+
+      panel.classList.add('is-open');
+      panel.setAttribute('aria-hidden','false');
+      activeId = id;
+    }
+
+    function closeBio(){
+      members.forEach(function(m){
+        m.classList.remove('is-active');
+        m.setAttribute('aria-expanded','false');
+      });
+      panel.classList.remove('is-open');
+      panel.setAttribute('aria-hidden','true');
+      activeId = null;
+    }
+
+    members.forEach(function(member){
+      member.addEventListener('click', function(){
+        var id = member.getAttribute('data-bio-id');
+        if (id === activeId) {
+          closeBio();
+        } else {
+          openBio(member);
+        }
+      });
+    });
+
+    closeBtn.addEventListener('click', closeBio);
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && activeId) {
+        closeBio();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
